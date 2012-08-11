@@ -1,0 +1,24 @@
+git node: A package manager of sorts to make Node.js submodules useful
+
+HOW TO USE:
+
+git node add <package> [<name>] [@<version>]: Install <package> as a Git repository URL or package name (resolve to URL by search engine)
+
+git node update: Clone the appropriate dependencies or checkout latest compatible version
+
+git node ls: List submodule packages
+
+
+Remember, if your package is a library and you distribute it on npm, remember to add node_modules (or the appropriate packages) to `.npmignore`!
+
+
+What does git-node set out to do? Make the package multiverse slightly saner:
+
+1. Central package repositories DON'T SCALE
+2. Listing dependencies by version number doesn't tell you anything meaningful about what you're depending on (semver is only meaningful with respect to other semver-labeled versions of the same package)
+3. Checking in dependencies is a bad idea for the same reason (though slightly better if you're an application, at least you have all the dependency data with you)
+4. npm is bloated
+5. Node.js is bloated (with things like... npm)
+6. Git submodules is a proper way of enumerating dependencies that a project uses, and probably the necessary way
+7. But... git submodule isn't the best utility to work with, and is rather inflexible compared to Node.js's require system
+8. git-node aims to make git learn about Node.js's dependency system so it can intellegently handle Node.js dependencies
