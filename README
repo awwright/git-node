@@ -9,12 +9,18 @@ git node update: Clone the appropriate dependencies or checkout latest compatibl
 git node ls: List submodule packages
 
 
-Remember, if your package is a library and you distribute it on npm, remember to add node_modules (or the appropriate packages) to `.npmignore`!
+PACKAGE MAINTAINERS:
+
+If your package is a library and you distribute it on npm, remember to add node_modules (or the appropriate packages) to `.npmignore`!
+
+Remember to tag your Git repository according to the http://semver.org/spec/v1.0.0.html standard. Please remember to include the leading "v" in your version tags!
+
+Please don't release 0.x.y versions of software. A major version of zero means it carries no semantics whatsoever, making it impossible to compare one package against another. Version numbers are cheap. The minute someone else is using your software, go ahead release version 1.
 
 
 What does git-node set out to do? Make the package multiverse slightly saner:
 
-1. Central package repositories DON'T SCALE
+1. Central package repositories don't scale. I don't mean "you should have used sharding!" or technical bottlenecks. I mean, locking people into a particular service means you'll hit a hard ceiling on their number of users.
 2. Listing dependencies by version number doesn't tell you anything meaningful about what you're depending on (semver is only meaningful with respect to other semver-labeled versions of the same package)
 3. Checking in dependencies is a bad idea for the same reason (though slightly better if you're an application, at least you have all the dependency data with you)
 4. npm is bloated

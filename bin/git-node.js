@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-var Git = require('./../lib/git-node-util').Git;
-var npm = require('./../lib/git-node-npm');
-var semver = require('semver');
+var Git = require('git-node/lib/git-node-util').Git;
+var npm = require('git-node/lib/git-node-npm');
 var fs = require('fs');
 var path = require('path');
 
@@ -125,41 +124,14 @@ function cmdUpdate(args){
 		if(submoduleVersions[submodule]!==undefined) return callback(null);
 		submoduleVersions[submodule] = null;
 		var subgit = new Git(submodule);
-		subgit.fetchUpdates(function(err){
-			if(err) throw err;
-			var requiredversion, versiontags;
-			subgit.getVersions(function(err, tags){
-				versiontags = tags;
-				haveResults();
-			});
-			subgit.getSubmoduleKey(submodule, 'semver', function(err, version){
-				requiredversion = version||'*';
-				haveResults();
-			});
-			function haveResults(){
-				if(!(versiontags && requiredversion)) return;
-				var orderedVersions = Object.keys(versiontags).sort(semver.compare);
-				var newer = [];
-				for(var i=orderedVersions.length-1; i>=0; i--){
-					if(semver.satisfies(orderedVersions[i], requiredversion)){
-						if(newer.length) console.log('\x1b[00;34m%s\x1b[00m newer versions available: %s', submodule, newer.join(' '));
-						return haveVersion(orderedVersions[i]);
-					}
-					else newer.push(orderedVersions[i]);
-				}
-				haveVersion(null);
-			}
-			function haveVersion(compatver){
-				// Checkout
-				submoduleVersions[submodule] = {semver:compatver, ref:versiontags[compatver]};
-				subgit.checkoutRef(versiontags[compatver], haveCheckout);
-			}
-			function haveCheckout(){
-				console.log('\x1b[00;34m%s\x1b[00m @%s', submodule, submoduleVersions[submodule].semver);
+		git.getSubmoduleKey(submodule, 'semver', function(err, version){
+			var requiredversion = version||'*';
+			subgit.checkoutCompatibleVersion(requiredversion, function(err, semver){
+				console.log('\x1b[00;34m%s\x1b[00m @%s', submodule, semver);
 				subgit.getSubmodulePackages(function(err, modules){
 					checkDependencies(submodule, callback);
 				});
-			}
+			});
 		});
 	}
 }
