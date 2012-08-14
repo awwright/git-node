@@ -26,6 +26,7 @@ var commands =
 	, 'ls-repo-npmname': cmd_ls_repo_npmname
 	, 'ls-npm-packages': cmd_ls_npm_packages
 	, 'fetch-repo-urls': cmd_fetch_repo_urls
+	, 'which': cmd_which
 	};
 
 if(!commands[command]){
@@ -41,12 +42,13 @@ function printHelp(){
 	console.log('Usage: git node <command> [<args>]');
 	console.log('');
 	console.log('Some commands:');
-	console.log('   update         Clone or checkout the correct commit in submodule packages');
+	console.log('   update         Clone the appropriate dependencies or checkout latest compatible version');
 //	console.log('   upgrade        Pull new, version-compatible versions of submodules');
 	console.log('   add            Install a package');
 	console.log('   import         Import packages to install from packages.json and node_modules');
 //	console.log('   rm             Remove a submodule package with no local modifications');
 	console.log('   ls             List installed submodule packages');
+	console.log('   which          Check if package is installed');
 }
 
 function cmdUpdate(args){
@@ -62,7 +64,6 @@ function cmdUpdate(args){
 	var installnpm = true;
 	var npmpackages = {};
 	if(installnpm) console.log("Installing npm dependencies where they don't exist.");
-
 
 	var submoduleVersions = {};
 	var git;
@@ -275,5 +276,34 @@ function cmd_fetch_repo_urls(args){
 				});
 			});
 		});
+	});
+}
+
+function cmd_which(args){
+	var pkg = args[0];
+	if(pkg.match(/^[a-zA-Z0-9]{40}$/)){
+		isInstalledGit(pkg, function(err, v){
+			console.log(v);
+		});
+	}else{
+		isInstallednpm(pkg, function(err, v){
+			console.log(v);
+		});
+	}
+}
+
+function isInstalledGit(commit, cb){
+	var git = new Git('.');
+	git.getRefs(function(err, v){
+		console.log(v);
+	});
+}
+
+function isInstallednpm(npmname, cb){
+	var git = new Git('.');
+	// Technically this argument is supposed to be a regex but this is alright, it returns the exact match among other matches
+	git.getnpmPackages(npmname, function(err, value){
+		if(err) return cb(err);
+		if(value[npmname]) return cb(null, value[npmname]);
 	});
 }

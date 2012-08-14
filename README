@@ -1,5 +1,7 @@
 git node: A package manager of sorts to make Node.js submodules useful
 
+
+
 HOW TO USE:
 
 git node add <package> [<name>] [@<version>]: Install <package> as a Git repository URL or package name (resolve to URL by search engine)
@@ -8,6 +10,9 @@ git node update: Clone the appropriate dependencies or checkout latest compatibl
 
 git node ls: List submodule packages
 
+git node which <package>: Check if a package.json name or package identified by Git commit id is locally installed, and return its path
+
+
 
 PACKAGE MAINTAINERS:
 
@@ -15,7 +20,14 @@ If your package is a library and you distribute it on npm, remember to add node_
 
 Remember to tag your Git repository according to the http://semver.org/spec/v1.0.0.html standard. Please remember to include the leading "v" in your version tags!
 
-Please don't release 0.x.y versions of software. A major version of zero means it carries no semantics whatsoever, making it impossible to compare one package against another. Version numbers are cheap. The minute someone else is using your software, go ahead release version 1.
+Please don't release 0.x.y versions of software. A major version of zero means it carries no semantics whatsoever, making it impossible to compare one package against another. Version numbers are cheap. The minute someone else is using your software, go ahead release version 1. Your software doesn't have to be perfect, you just have to tell people when you break stuff.
+
+
+
+CAVEATS:
+
+Git tags are known on an open world basis, that is, we don't know for certain the complete set of tags, there may be some commits with a tag that we don't currently have because the push hasn't propogated. Developers will need to watch out if they add tags to old commits, especially if it's a buggy commit -- people depending on the repository may need to later blacklist the release/patch number as buggy.
+
 
 
 What does git-node set out to do? Make the package multiverse slightly saner:
