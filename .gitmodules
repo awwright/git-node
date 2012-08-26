@@ -2,5 +2,5 @@
 	path = node_modules/semver
 	url = git://github.com/isaacs/node-semver.git
 	nodejs = package
-	semver = *
+	semver = ~1
 	npm = semver
