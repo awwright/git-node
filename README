@@ -22,6 +22,11 @@ Remember to tag your Git repository according to the http://semver.org/spec/v1.0
 
 Please don't release 0.x.y versions of software. A major version of zero means it carries no semantics whatsoever, making it impossible to compare one package against another. Version numbers are cheap. The minute someone else is using your software, go ahead release version 1. Your software doesn't have to be perfect, you just have to tell people when you break stuff.
 
+Place a symlink named "index.js" to your main library function in the root of your package. This lets people call require('submodulename') without too much extra work. While coding this in package.json also works, it doesn't carry the same semantics as index.js does.
+
+Anytime you dereference an npm package, when initially adding by npm name, that package needs to be registered with the npm repository, and have a Git repository URL associated with it. Packages without a Git repository URL will need to have their clone URL manually specified.
+
+Any packages your repository depends on should work without any additional configuration, since package-specific configurations (like the repository URL) are saved in `.gitmodules`.
 
 
 CAVEATS:
