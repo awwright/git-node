@@ -17,8 +17,7 @@ for(var i=0; i<args.length; i++){
 
 if(!runtime.commands[command]){
 	console.log('Unknown command "%s"', command);
-	printHelp();
-	return;
+	command = 'help';
 }
 
 // RUN THE COMMAND
