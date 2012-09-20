@@ -24,9 +24,13 @@ Please don't release 0.x.y versions of software. A major version of zero means i
 
 Place a symlink named "index.js" to your main library function in the root of your package. This lets people call require('submodulename') without too much extra work. While coding this in package.json also works, it doesn't carry the same semantics as index.js does.
 
-Anytime you dereference an npm package, when initially adding by npm name, that package needs to be registered with the npm repository, and have a Git repository URL associated with it. Packages without a Git repository URL will need to have their clone URL manually specified.
+Any packages your repository depends on should work without any additional configuration, since package-specific configurations (like the repository URL) are saved in `.gitmodules`. If the npm regristry does not list a Git URL for a package, you will need to manually specify the repository URL the first time you add it to your package.
 
-Any packages your repository depends on should work without any additional configuration, since package-specific configurations (like the repository URL) are saved in `.gitmodules`.
+When specifying URLs to GitHub hosted repositories, use the URLs starting with <git://github.com/>. If individual users wish to use a different protocol, use the url.<base>.insteadOf configuration option in Git. For instance:
+
+    $ git config 'url.https://github.com/.insteadOf' 'git://github.com/'
+    $ git config 'url.ssh://git@github.com/.pushInsteadOf' 'git://github.com/'
+
 
 
 CAVEATS:
