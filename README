@@ -1,5 +1,13 @@
 git node: Make Node.js submodules useful
 
+The git-node subcommand makes it easy to use Git submodules to manage Node.js package dependencies. When you enter your dependencies as a commit id, instead of as a tree or a only a line in package.json, you specify not only the package itself that you depend on, but the entire commit history of the package, independent of the parent project's history. You would use submodules for all the same reasons you should use Git: It's decentralized, it eliminates the need for trust in favor of a web of trust, and it guarentees what you coded for is what other people will check out.
+
+However, Git submodules by themselves aren't very useful for Node.js. Many people complain they're just hard to understand. Often the hard part is only getting started. Most importantly, many packages that people want to check out have their own dependencies... How should these be managed?
+
+git-node handles all this for you. Specify which versions of which packages you're safe to upgrade to, and git-node will install them, check out a compatible tag, and create submodules for all the dependencies.
+No reliance on a central package manager. It can resolve multiple packages depending on the same package, and can read dependency information from package.json files where necessary.
+
+git-node is designed to be used with other commands and services, as a part of a larger package management solution.
 
 
 HOW TO USE:
