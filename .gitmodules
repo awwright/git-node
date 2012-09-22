@@ -1,6 +1,6 @@
 [submodule "node_modules/semver"]
 	path = node_modules/semver
-	url = undefined
+	url = git://github.com/isaacs/node-semver.git
 	nodejs = package
 	semver = ~1
 	npm = semver
