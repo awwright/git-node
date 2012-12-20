@@ -39,6 +39,19 @@ When specifying URLs to GitHub hosted repositories, use the URLs starting with <
     $ git config 'url.https://github.com/.insteadOf' 'git://github.com/'
     $ git config 'url.ssh://git@github.com/.pushInsteadOf' 'git://github.com/'
 
+Sometimes, package maintainers don't provide a repository URL, or do so in the incorrect format. If they don't, you should file an issue on their project page (GitHub or similar) like so:
+
+<blockquote>
+While you're publishing packages to npm, can you please push a repository URL too? Most package publishers provide a canonical Git URL where updates may be retrieved, which helps people and software tools discover the Git repository. If you're using the package.json file in the repository, you could add:
+
+    "repository" :
+      { "type" : "git"
+      , "url" : "git://github.com/path/torepo.git"
+      }
+
+Then pushing these changes to npm would be awesome.
+</blockquote>
+
 
 
 CAVEATS:
